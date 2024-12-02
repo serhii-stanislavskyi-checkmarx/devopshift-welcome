@@ -27,7 +27,7 @@ jobs:
       - run:
           name: Deploy
           command: |
-          echo "Deploy: << parameters.environment >> Running on branch: $CIRCLE_BRANCH"      
+          echo "Deploy: << parameters.environment >> Running on branch $CIRCLE_BRANCH"      
 
 
 workflows:
