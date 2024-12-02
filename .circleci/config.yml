@@ -30,7 +30,5 @@ workflows:
          happiness: "sad"
      - show_day:
          happiness: "happy"
-         day: "Saturday"
-         season: "summer"
          requires:
            - show_day
