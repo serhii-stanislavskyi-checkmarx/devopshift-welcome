@@ -28,7 +28,3 @@ workflows:
    jobs:
      - show_day:
          happiness: "sad"
-     - show_day:
-         happiness: "happy"
-         requires:
-           - show_day
