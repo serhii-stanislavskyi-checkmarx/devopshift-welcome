@@ -5,41 +5,53 @@ parameters:
     type: string
     default: "staging"
     enum: ["staging", "production"]
-  
+
 jobs:
   build:
     docker:
-      - image: cimg/openjdk:11.0
+      - image: circleci/node:14
     steps:
       - checkout
       - run:
-          name: Build
+          name: Install Dependencies
           command: |
-          echo "Build: << pipeline.parameters.environment >>"
+            echo "Installing deps..."
+            npm install
+      - run:
+          name: Run Unit Tests
+          command: |
+            echo "Running tests on branch: $CIRCLE_BRANCH"
+            npm test
+
   deploy:
+    docker:
+      - image: circleci/node:14
     parameters:
       environment:
-        type: string 
-    docker:
-      - image: cimg/openjdk:11.0
+        type: string
     steps:
-      - checkout
       - run:
           name: Deploy
           command: |
-          echo "Deploy: << parameters.environment >>"     
-
+            echo "Deploying to << parameters.environment >> environment."
+      - when:
+          condition:
+            equal: ["<< parameters.environment >>", "production"]
+          steps:
+            - run:
+                name: Production Verification
+                command: echo "Verification env << parameters.environment >>"
 
 workflows:
- version: 2
- build_deploy:
-   jobs:
-     - build
-     - deploy:
-        environment: "production"
-        filters:
-          branches:
-            only:
-              - main
-        requires:
-          - build      
+  version: 2
+  build-deploy:
+    jobs:
+      - build:
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - main
+          environment: "production"
