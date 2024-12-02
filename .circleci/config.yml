@@ -38,7 +38,9 @@ jobs:
           steps:
             - run:
                 name: Production Verification
-                command: echo "Verification env << parameters.environment >>"
+                command: | 
+                echo "Verification env << parameters.environment >>"
+                echo "Running on branch: $CIRCLE_BRANCH"
 
 workflows:
   version: 2
@@ -51,5 +53,5 @@ workflows:
           filters:
             branches:
               only:
-                - main
+                - workshop/circleci
           environment: "production"
