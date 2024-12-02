@@ -2,7 +2,7 @@ version: 2.1
 
 parameters:
   environment:
-    type: enum
+    type: string
     default: "staging"
     enum: ["staging", "production"]
   
@@ -27,7 +27,8 @@ jobs:
       - run:
           name: Deploy
           command: |
-          echo "Deploy: << parameters.environment >> Running on branch $CIRCLE_BRANCH"      
+          echo "Deploy: << parameters.environment >>"
+          echo "Running on branch $CIRCLE_BRANCH"      
 
 
 workflows:
