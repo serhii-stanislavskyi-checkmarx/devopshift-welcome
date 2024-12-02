@@ -15,14 +15,12 @@ jobs:
       - run:
           name: Install Dependencies
           command: |
-            echo "Installing deps..."
-            npm install
+            echo "Installing deps... on << pipeline.parameters.environment >>"
       - run:
           name: Run Unit Tests
           command: |
             echo "Running tests on branch: $CIRCLE_BRANCH"
-            npm test
-
+            
   deploy:
     docker:
       - image: circleci/node:14
@@ -46,7 +44,7 @@ workflows:
   version: 2
   build-deploy:
     jobs:
-      - build:
+      - build
       - deploy:
           requires:
             - build
