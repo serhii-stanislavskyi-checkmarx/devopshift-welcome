@@ -9,7 +9,7 @@ parameters:
 jobs:
   build:
     docker:
-      - image: cimg/base:stable
+      - image: cimg/openjdk:11.0
     steps:
       - checkout
       - run:
@@ -21,7 +21,7 @@ jobs:
       environment:
         type: string 
     docker:
-      - image: cimg/base:stable
+      - image: cimg/openjdk:11.0
     steps:
       - checkout
       - run:
